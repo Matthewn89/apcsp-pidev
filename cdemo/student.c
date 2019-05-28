@@ -1,39 +1,43 @@
 #include <stdio.h>
 #include <string.h>
-#include "student.h"
 
-struct Student 
-{
-  char firstName;
-  char lastName;
+struct Student {
+  char firstName[50];
+  char lastName[50];
   int age;
   int studentID;
-} Student;
-char printStudent (struct Student* student)
-{
-  printf("Name: %c %c\n", student->firstName, student->lastName);
-  printf("  Age: %d\n", student->age);
-  printf("  Student ID: %d\n", student->studentID);
-  return 0;
+};
+
+void printStudent(struct Student* student) {
+  printf("Student:\n");
+  printf("Name: %s %s\n",student -> firstName, student -> lastName);
+  printf("Age: %d\n", student -> age);
+  printf("Student ID: %d\n", student -> studentID);
 }
-int main()
-{
-  struct Student JeremyJoe;
-  struct Student JadenYork;
-  char input, name;
 
-  strcpy(&JeremyJoe.firstName, "Jeremy");
-  strcpy(&JeremyJoe.lastName, "Joe");
-  JeremyJoe.age = 17;
-  JeremyJoe.studentID = 302485;
-
-  strcpy(&JadenYork.firstName, "Jaden");
-  strcpy(&JadenYork.lastName, "York");
-  JadenYork.age = 16;
-  JadenYork.studentID = 592826;
-  
-  printf("Which student(s)?\n");
-  fgets(&input, 256, stdin);
-  sscanf(&input, "%c", &name);
-  printStudent(struct Student* name);
+int main() {
+  int numStudent;
+  char strInput[256];
+  printf("How many students do you want to enter: \n");
+  fgets(strInput, 256, stdin);
+  sscanf(strInput, "%d", &numStudent);
+  struct Student student[numStudent];
+  for (int i = 0; i < numStudent; i++) {
+    printf("You are entering student number %d\n", i);
+    printf("First Name: ");
+    fgets(strInput, 256, stdin);
+    sscanf(strInput, "%s", student[i].firstName);
+    printf("Last Name: ");
+    fgets(strInput, 256, stdin);
+    sscanf(strInput, "%s", student[i].lastName);
+    printf("Age: ");
+    fgets(strInput, 256, stdin);
+    sscanf(strInput, "%d", &student[i].age);
+    printf("Student ID: ");
+    fgets(strInput, 256, stdin);
+    sscanf(strInput, "%d", &student[i].studentID);
+  }
+  for (int i = 0; i < numStudent; i++) {
+    printStudent(&student[i]);
+  }
 }
